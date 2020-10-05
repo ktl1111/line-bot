@@ -1,6 +1,5 @@
 #我們要寫一個伺服器，放在雲端上執行，來接收line轉載過來的訊息
 #這個伺服器要跟line的程式做互動
-
 from flask import Flask, request, abort
 
 from linebot import (
