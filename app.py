@@ -42,10 +42,14 @@ def handle_message(event):
     msg = event.message.text
     r = '我看不懂你說什麼'
 
-    if msg == 'hi':
-        r = 'hi'
-    elif msg == '你吃飯了嗎':
+    if msg in ['hi', 'Hi', 'HI', '嗨一', '嗨']:
+        r = '嗨'
+    elif msg in ['你吃飯了嗎', '你吃飯了嗎?']:
         r = '還沒'
+    elif msg == '你是誰':
+        r = '我是機器人'
+    elif '定位' in msg:
+        r = '你想定位，是嗎？'
 
     line_bot_api.reply_message(
         event.reply_token,
