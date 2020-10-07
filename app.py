@@ -1,5 +1,5 @@
-#我們要寫一個伺服器，放在雲端上執行，來接收line轉載過來的訊息
-#這個伺服器要跟line的程式做互動
+# 我們要寫一個伺服器，放在雲端上執行，來接收line轉載過來的訊息
+# 這個伺服器要跟line的程式做互動
 from flask import Flask, request, abort
 
 from linebot import (
@@ -9,12 +9,13 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, StickerSendMessage,
 )
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('YzpbfkqJwhJMy6H0cc9vyLtdlROBZzeMkPQo9yvgcQvBaHBWnW8TV0o7oZh400spWRct3sIPx9WE50tSHqeR5v0gIz/GF1+ahmJ1m+R1GlE8yfsJuA7GytV4lQZhaHaGD4pAH0cbOxP18tmDSmr4LgdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi(
+    'YzpbfkqJwhJMy6H0cc9vyLtdlROBZzeMkPQo9yvgcQvBaHBWnW8TV0o7oZh400spWRct3sIPx9WE50tSHqeR5v0gIz/GF1+ahmJ1m+R1GlE8yfsJuA7GytV4lQZhaHaGD4pAH0cbOxP18tmDSmr4LgdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('cb60a307dc00a676ba90f8b3cafec5c4')
 
 
@@ -41,6 +42,17 @@ def callback():
 def handle_message(event):
     msg = event.message.text
     r = '我看不懂你說什麼'
+
+    if '給我貼圖' in msg:
+        sticker_message = StickerSendMessage(
+            package_id='1',
+            sticker_id='1'
+        )
+
+        line_bot_api.reply_message(
+            event.reply_token,
+            sticker_message)
+        return
 
     if msg in ['hi', 'Hi', 'HI', '嗨一', '嗨']:
         r = '嗨'
